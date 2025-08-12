@@ -6,17 +6,17 @@ const TeamGenerator = ({ selectedPlayers, players, onTeamsGenerated, teams, isSh
     const canGenerateTeams = selectedPlayers.length >= 4 && selectedPlayers.length % 2 === 0;
 
     return (
-        <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl shadow-lg p-6 border-2 border-blue-100">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-gray-800 flex items-center">
-                    <span className="mr-2">🏸</span>
-                    Team Generator
-                </h2>
-                <div className="flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-                    <span className="mr-1">👥</span>
-                    {selectedPlayers.length} selected
-                </div>
+        <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl shadow-lg p-4 sm:p-6 border-2 border-blue-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
+                <span className="mr-2 text-2xl">🏸</span>
+                Team Generator
+            </h2>
+            <div className="flex items-center bg-blue-100 text-blue-800 text-xs sm:text-sm font-medium px-3 py-1.5 sm:py-1 rounded-full whitespace-nowrap">
+                <span className="mr-1.5">👥</span>
+                {selectedPlayers.length} {selectedPlayers.length === 1 ? 'player' : 'players'} selected
             </div>
+        </div>
 
             {selectedPlayers.length > 0 && (
                 <div className="mb-6">

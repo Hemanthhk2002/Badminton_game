@@ -18,18 +18,18 @@ const PlayerList = ({ players, onAddPlayer, onRemovePlayer, selectedPlayers, onT
         Players
       </h2>
       
-      <form onSubmit={handleSubmit} className="mb-6">
-        <div className="flex">
+      <form onSubmit={handleSubmit} className="mb-4">
+        <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={newPlayerName}
             onChange={(e) => setNewPlayerName(e.target.value)}
             placeholder="Enter player name"
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-4 py-2 sm:py-2.5 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
           />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors"
+          <button 
+            type="submit" 
+            className="px-4 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200 text-sm sm:text-base whitespace-nowrap"
           >
             Add Player
           </button>
