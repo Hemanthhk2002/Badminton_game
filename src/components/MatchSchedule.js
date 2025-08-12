@@ -1,69 +1,111 @@
-const MatchSchedule = ({ teams, matches, onGenerateMatches }) => {
+const MatchSchedule = ({ teams, matches, onGenerateMatches, onSetWinner }) => {
     const canGenerateMatches = teams.length >= 2;
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <span className="mr-2">📅</span>
-                Match Schedule
-            </h2>
+        <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl shadow-lg p-6 border-2 border-green-100">
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                    <span className="mr-2">🏆</span>
+                    Tournament Matches
+                </h2>
+                <button
+                    onClick={onGenerateMatches}
+                    disabled={!canGenerateMatches}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center ${
+                        canGenerateMatches
+                            ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 shadow-md hover:shadow-lg'
+                            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                    }`}
+                >
+                    <span className="mr-2">🔄</span>
+                    Generate Schedule
+                </button>
+            </div>
 
-            <button
-                onClick={onGenerateMatches}
-                disabled={!canGenerateMatches}
-                className={`w-full py-3 px-6 rounded-lg font-medium transition-all mb-6 ${
-                    canGenerateMatches
-                        ? 'bg-orange-600 text-white hover:bg-orange-700'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-            >
-                🏆 Generate Match Schedule
-            </button>
-
-            {matches.length > 0 && (
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-4">
-                        Tournament Matches ({matches.length})
-                    </h3>
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
-                        {matches.map((match, index) => (
-                            <div
-                                key={index}
-                                className="p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-2 border-green-200 animate-fade-in"
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                <div className="flex items-center justify-between">
-                                    <div className="text-lg font-bold text-gray-800">
-                                        Match {index + 1}
+            {matches.length > 0 ? (
+                <div className="space-y-4">
+                    {matches.map((match, index) => (
+                        <div
+                            key={index}
+                            className="bg-white rounded-xl p-4 border-2 border-green-100 shadow-sm hover:shadow-md transition-shadow"
+                        >
+                            <div className="text-center text-sm text-gray-500 mb-2">
+                                Match {index + 1}
+                            </div>
+                            <div className="grid grid-cols-3 items-center gap-4">
+                                {/* Team 1 */}
+                                <div 
+                                    className={`p-3 rounded-lg text-center transition-all ${
+                                        match.winner === 'team1' 
+                                            ? 'bg-green-50 border-2 border-green-300 transform scale-105'
+                                            : 'bg-gray-50 border border-gray-200'
+                                    }`}
+                                >
+                                    <div className="font-bold text-gray-800">
+                                        Team {String.fromCharCode(65 + match.team1Index)}
                                     </div>
                                     <div className="text-sm text-gray-600">
-                                        🏸
+                                        {match.team1.join(' & ')}
+                                    </div>
+                                    <button
+                                        onClick={() => onSetWinner(index, 'team1')}
+                                        className={`mt-2 px-3 py-1 text-xs rounded-full ${
+                                            match.winner === 'team1'
+                                                ? 'bg-green-500 text-white'
+                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        {match.winner === 'team1' ? 'Winner! 🏆' : 'Set Winner'}
+                                    </button>
+                                </div>
+
+                                {/* VS */}
+                                <div className="text-center">
+                                    <div className="inline-block bg-gray-100 rounded-full p-2">
+                                        <span className="text-xl font-bold text-gray-600">VS</span>
                                     </div>
                                 </div>
-                                <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2">
-                                    <div className="flex-1 text-center">
-                                        <div className="font-bold text-blue-800 bg-blue-100 rounded-lg p-2">
-                                            Team {String.fromCharCode(65 + match.team1Index)}
-                                        </div>
-                                        <div className="text-sm text-gray-600 mt-1">
-                                            {match.team1.join(' & ')}
-                                        </div>
+
+                                {/* Team 2 */}
+                                <div 
+                                    className={`p-3 rounded-lg text-center transition-all ${
+                                        match.winner === 'team2' 
+                                            ? 'bg-green-50 border-2 border-green-300 transform scale-105'
+                                            : 'bg-gray-50 border border-gray-200'
+                                    }`}
+                                >
+                                    <div className="font-bold text-gray-800">
+                                        Team {String.fromCharCode(65 + match.team2Index)}
                                     </div>
-                                    <div className="text-2xl font-bold text-gray-600 my-2 sm:my-0">
-                                        vs
+                                    <div className="text-sm text-gray-600">
+                                        {match.team2.join(' & ')}
                                     </div>
-                                    <div className="flex-1 text-center">
-                                        <div className="font-bold text-blue-800 bg-blue-100 rounded-lg p-2">
-                                            Team {String.fromCharCode(65 + match.team2Index)}
-                                        </div>
-                                        <div className="text-sm text-gray-600 mt-1">
-                                            {match.team2.join(' & ')}
-                                        </div>
-                                    </div>
+                                    <button
+                                        onClick={() => onSetWinner(index, 'team2')}
+                                        className={`mt-2 px-3 py-1 text-xs rounded-full ${
+                                            match.winner === 'team2'
+                                                ? 'bg-green-500 text-white'
+                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        {match.winner === 'team2' ? 'Winner! 🏆' : 'Set Winner'}
+                                    </button>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center py-8">
+                    <div className="inline-block p-4 bg-blue-50 rounded-full mb-4">
+                        <span className="text-4xl">🏸</span>
                     </div>
+                    <h3 className="text-lg font-medium text-gray-700">No matches scheduled yet</h3>
+                    <p className="text-gray-500 mt-1">
+                        {canGenerateMatches 
+                            ? 'Click "Generate Schedule" to create matchups!'
+                            : 'You need at least 2 teams to generate matches.'}
+                    </p>
                 </div>
             )}
         </div>
